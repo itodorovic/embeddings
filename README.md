@@ -1,14 +1,3 @@
----
-title: {{title}}
-emoji: {{emoji}}
-colorFrom: {{colorFrom}}
-colorTo: {{colorTo}}
-sdk: {{sdk}}
-sdk_version: "{{sdkVersion}}"
-app_file: app.py
-pinned: false
----
-
 # Embeddings Application
 
 This application is a FastAPI server that provides an API for working with embeddings. It's built with Python and packaged with Docker for easy deployment and scaling.
