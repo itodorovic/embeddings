@@ -7,6 +7,10 @@ ARG MODEL_NAME=WhereIsAI/UAE-Large-V1
 # Set the model name and path as environment variables
 ENV MODEL_NAME=$MODEL_NAME
 ENV MODEL_PATH=/models/${MODEL_NAME}
+ENV TRANSFORMERS_CACHE=/.cache
+
+# Create /.cache directory and make it writable
+RUN mkdir /.cache && chmod 777 /.cache
 
 # Install necessary Python packages
 COPY requirements.txt /app/requirements.txt
