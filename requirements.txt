@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+gunicorn
+pydantic
+angle_emb
+bitsandbytes
+datasets
+transformers
+wandb
