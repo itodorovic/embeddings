@@ -29,6 +29,9 @@ RUN rm -rf /models/${MODEL_NAME}/onnx
 COPY ./app /app
 COPY start.sh /start.sh
 
+# Change the permissions of the start script
+RUN chmod +x /start.sh
+
 # Set the working directory
 WORKDIR /app
 
