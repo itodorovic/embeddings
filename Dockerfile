@@ -7,7 +7,7 @@ ARG MODEL_NAME=WhereIsAI/UAE-Large-V1
 # Set the model name and path as environment variables
 ENV MODEL_NAME=$MODEL_NAME
 ENV MODEL_PATH=/models/${MODEL_NAME}
-ENV TRANSFORMERS_CACHE=/.cache
+ENV HF_HOME=/.cache
 
 # Create /.cache directory and make it writable
 RUN mkdir /.cache && chmod 777 /.cache
@@ -42,5 +42,6 @@ WORKDIR /app
 # Expose the FastAPI port
 EXPOSE 8080
 
-# Start the FastAPI server using the start script
-CMD ["/start.sh"]
+# Instead of using start.sh, run the application directly
+CMD ["python3", "/app/app.py"]
+# CMD ["/start.sh"]
