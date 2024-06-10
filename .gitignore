@@ -1,5 +1,5 @@
 # General
-venv/
+.venv/
 models/
 app/__pycache__/
 
