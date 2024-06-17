@@ -23,6 +23,24 @@ try:
 except Exception as e:
     print(f"Failed to load model from path {model_path}. Error: {str(e)}")
 
+
+def get_embeddings_common(embedding_input: EmbeddingInput):
+    # Encode the input text using the model
+    embeddings = angle_model.encode(embedding_input.input, embedding_size=embedding_input.dimensions)
+
+    # Create a response format compatible with OpenAI's API
+    response = {
+        "object": "list",
+        "data": [
+            {"object": "embedding", "index": i, "embedding": emb.tolist()}
+            for i, emb in enumerate(embeddings)
+        ],
+        "model": model_name,
+        "usage": {"prompt_tokens": len(embedding_input.input), "total_tokens": len(embedding_input.input)},
+    }
+    return response
+
+
 @app.get("/")
 def read_root():
     return {
@@ -41,31 +59,12 @@ def health_check():
     return {"health": "ok"}
 
 @app.post("/v1/embeddings")
-def get_embeddings(embedding_input: EmbeddingInput):
-    # # Check if the input is an empty string
-    # if not embedding_input.input.strip():
-    #     return {
-    #         "object": "list",
-    #         "data": [],
-    #         "model": model_name,
-    #         "usage": {"prompt_tokens": 0, "total_tokens": 0},
-    #     }
+def get_v1_embeddings(embedding_input: EmbeddingInput):
+    return get_embeddings_common(embedding_input)
 
-    # Encode the input text using the model
-    embeddings = angle_model.encode(embedding_input.input, embedding_size=embedding_input.dimensions)
-
-    # Create a response format compatible with OpenAI's API
-    response = {
-        "object": "list",
-        "data": [
-            {"object": "embedding", "index": i, "embedding": emb.tolist()}
-            for i, emb in enumerate(embeddings)
-        ],
-        "model": model_name,
-        "usage": {"prompt_tokens": len(embedding_input.input), "total_tokens": len(embedding_input.input)},
-    }
-
-    return response
+@app.post("/embeddings")
+def get_v1_embeddings(embedding_input: EmbeddingInput):
+    return get_embeddings_common(embedding_input)
 
 if __name__ == "__main__":
     import uvicorn
