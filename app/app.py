@@ -19,7 +19,7 @@ model_path = os.getenv('MODEL_PATH', default='models/WhereIsAI/UAE-Large-V1')
 
 # Load the model
 try:
-    angle_model = AnglE.from_pretrained(model_path, pooling_strategy='cls').to('cpu')
+    angle_model = AnglE.from_pretrained(model_path, pooling_strategy='cls').cuda()
 except Exception as e:
     print(f"Failed to load model from path {model_path}. Error: {str(e)}")
 
